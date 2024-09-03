@@ -1,15 +1,16 @@
 {
   "files": {
-    "main.css": "/Sarveshrajpure/hackathon_app/static/css/main.4e4b3f03.css",
-    "main.js": "/Sarveshrajpure/hackathon_app/static/js/main.0035efd7.js",
+    "main.css": "/Sarveshrajpure/hackathon_app/static/css/main.d2ef1e4f.css",
+    "main.js": "/Sarveshrajpure/hackathon_app/static/js/main.eac917ee.js",
     "static/js/453.a9dca0ae.chunk.js": "/Sarveshrajpure/hackathon_app/static/js/453.a9dca0ae.chunk.js",
+    "static/media/rocket.svg": "/Sarveshrajpure/hackathon_app/static/media/rocket.0f02ce0179c0c85cce33424f0a41407b.svg",
     "index.html": "/Sarveshrajpure/hackathon_app/index.html",
-    "main.4e4b3f03.css.map": "/Sarveshrajpure/hackathon_app/static/css/main.4e4b3f03.css.map",
-    "main.0035efd7.js.map": "/Sarveshrajpure/hackathon_app/static/js/main.0035efd7.js.map",
+    "main.d2ef1e4f.css.map": "/Sarveshrajpure/hackathon_app/static/css/main.d2ef1e4f.css.map",
+    "main.eac917ee.js.map": "/Sarveshrajpure/hackathon_app/static/js/main.eac917ee.js.map",
     "453.a9dca0ae.chunk.js.map": "/Sarveshrajpure/hackathon_app/static/js/453.a9dca0ae.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.4e4b3f03.css",
-    "static/js/main.0035efd7.js"
+    "static/css/main.d2ef1e4f.css",
+    "static/js/main.eac917ee.js"
   ]
 }
