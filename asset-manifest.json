@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/Sarveshrajpure/hackathon_app/static/css/main.4e4b3f03.css",
+    "main.js": "/Sarveshrajpure/hackathon_app/static/js/main.0035efd7.js",
+    "static/js/453.a9dca0ae.chunk.js": "/Sarveshrajpure/hackathon_app/static/js/453.a9dca0ae.chunk.js",
+    "index.html": "/Sarveshrajpure/hackathon_app/index.html",
+    "main.4e4b3f03.css.map": "/Sarveshrajpure/hackathon_app/static/css/main.4e4b3f03.css.map",
+    "main.0035efd7.js.map": "/Sarveshrajpure/hackathon_app/static/js/main.0035efd7.js.map",
+    "453.a9dca0ae.chunk.js.map": "/Sarveshrajpure/hackathon_app/static/js/453.a9dca0ae.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.4e4b3f03.css",
+    "static/js/main.0035efd7.js"
+  ]
+}
