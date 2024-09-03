@@ -1,11 +1,11 @@
 import React from "react";
 import Navbar from "../Components/Navbar";
+import HomeSection1 from "../Components/HomeSection1";
 
 const Home = () => {
   return (
-    <div className="bg-red-500 h-60">
-      Home
-      <Navbar />
+    <div className="">
+      <HomeSection1 />
     </div>
   );
 };
