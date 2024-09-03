@@ -4,7 +4,7 @@ import { Button } from "@mui/material";
 
 const HomeSection1 = () => {
   return (
-    <div className="bg-[#003145] h-[31rem] flex justify-around items-center px-20">
+    <div className="bg-[#003145] h-[28.2rem] flex justify-around items-center px-20">
       <div className="create-challenge-text-wrapper ">
         <div className="title-vertical-line-wrapper flex h-[6.5rem] items-center ">
           <div className=" p-[0.2rem] bg-yellow-500 h-full"> </div>
