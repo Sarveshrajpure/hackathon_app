@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
-import dayjs, { Dayjs } from "dayjs";
-import isBetween from "dayjs/plugin/isBetween";
 import CountDownTimer from "./CountDownTimer";
 import { monthNames } from "../Constants/Constants";
 import { Button } from "@mui/material";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
 import { useNavigate } from "react-router-dom";
-dayjs.extend(isBetween);
+import { getEventStatus } from "../Utilities/getEventStaus";
 
 interface Props {
   eventData: {
@@ -28,7 +26,7 @@ interface PastDateInt {
 
 const EventCard: React.FC<Props> = ({ eventData }) => {
   const navigate = useNavigate();
-  const [eventStatus, setEventStatus] = useState("");
+  const [eventStatus, setEventStatus] = useState<string | undefined>("");
   const [pastDate, setPastDate] = useState<PastDateInt>({
     date: 1,
     month: "jan",
@@ -39,19 +37,13 @@ const EventCard: React.FC<Props> = ({ eventData }) => {
   useEffect(() => {
     const startDate = eventData.startDate;
     const endDate = eventData.endDate;
-    let isBefore = dayjs().isBefore(dayjs(startDate));
-    let isBetweenStartAndEndDate = dayjs().isBetween(startDate, endDate, "day", "[]");
-    let isAfter = dayjs().isAfter(dayjs(endDate));
 
-    if (isBefore) {
-      setEventStatus("Upcoming");
-    } else if (isBetweenStartAndEndDate) {
-      setEventStatus("Active");
-    } else if (isAfter) {
-      setEventStatus("Past");
+    let status = getEventStatus(startDate, endDate);
 
+    setEventStatus(status);
+
+    if (status === "Past") {
       let pastDate = new Date(endDate);
-
       setPastDate({
         date: pastDate.getDate(),
         month: monthNames[pastDate.getMonth()],
