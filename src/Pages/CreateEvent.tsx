@@ -9,7 +9,6 @@ import {
   FormHelperText,
 } from "@mui/material";
 import calendarIcon from "../Assets/calenderIcon.svg";
-import { DatePicker } from "@mui/x-date-pickers";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -19,10 +18,9 @@ import dayjs from "dayjs";
 import { createEventsSchema } from "../Validations/CreateEventsValidations";
 import { allowedFileTypes } from "../Constants/Constants";
 import axios from "axios";
-
-interface imageFileInt {
-  name: string;
-}
+import { toast } from "react-toastify";
+import CircularProgress from "@mui/material/CircularProgress";
+import { v4 as uuid } from "uuid";
 
 interface formValuesInt {
   name: string;
@@ -39,16 +37,11 @@ const getCalendarIcon = () => {
 
 const CreateEvent = () => {
   const [imagePreview, setImagePreview] = useState<FileList | null>(null);
-  const today = new Date();
-  const initialStartDate = dayjs(today).format("YYYY-MM-DDTHH:mm:ss");
-  let nextDay = new Date(today);
-  nextDay.setDate(today.getDate() + 1);
-  const initialEndDate = dayjs(today).add(1, "day").format("YYYY-MM-DDTHH:mm:ss");
 
   const initialFormValues: formValuesInt = {
     name: "",
-    startDate: initialStartDate,
-    endDate: initialEndDate,
+    startDate: "",
+    endDate: "",
     description: "",
     image: null,
     level: "",
@@ -73,18 +66,24 @@ const CreateEvent = () => {
       }
 
       let imageUrl = response.data.secure_url;
+      const unique_id = uuid();
 
       let dataToBeUploaded = values;
       dataToBeUploaded.image = imageUrl;
+      dataToBeUploaded.id = unique_id;
       newChallenges.push(dataToBeUploaded);
 
       localStorage.setItem("challenges", JSON.stringify(newChallenges));
+
+      toast.success("Challenge added!");
+      setImagePreview(null);
+      actions.resetForm();
     } catch (error) {
       console.log(error);
     }
   };
 
-  const { values, handleChange, setFieldValue, handleSubmit, errors } = useFormik({
+  const { values, handleChange, setFieldValue, isSubmitting, handleSubmit, errors } = useFormik({
     initialValues: initialFormValues,
     validationSchema: createEventsSchema,
     onSubmit,
@@ -124,7 +123,7 @@ const CreateEvent = () => {
               </InputLabel>
               <DateTimePicker
                 name="startDate"
-                format="DD/MM/YYYY hh:mm a"
+                format="DD MMM' YYYY hh:mm a"
                 disablePast
                 slots={{ openPickerIcon: getCalendarIcon }}
                 slotProps={{
@@ -136,7 +135,7 @@ const CreateEvent = () => {
                   },
                 }}
                 sx={{ ".MuiInputBase-input": { fontSize: "14px" } }}
-                value={dayjs(values.startDate)}
+                value={values.startDate ? dayjs(values.startDate) : undefined}
                 onChange={(value) =>
                   setFieldValue("startDate", dayjs(value).format("YYYY-MM-DDTHH:mm:ss"), true)
                 }
@@ -148,19 +147,21 @@ const CreateEvent = () => {
               </InputLabel>
               <DateTimePicker
                 name="endDate"
-                format="DD/MM/YYYY hh:mm a"
+                format="DD MMM' YYYY hh:mm a"
                 disablePast
+                minDate={dayjs(values.startDate)}
+                minTime={dayjs(values.startDate)}
                 slots={{ openPickerIcon: getCalendarIcon }}
                 slotProps={{
                   textField: {
                     size: "small",
                     placeholder: "Add end date",
                     error: errors["endDate"] ? true : false,
-                    helperText: errors.startDate ? errors.endDate : "",
+                    helperText: errors.endDate ? errors.endDate : "",
                   },
                 }}
                 sx={{ ".MuiInputBase-input": { fontSize: "14px" } }}
-                value={dayjs(values.endDate)}
+                value={values.endDate ? dayjs(values.endDate) : undefined}
                 onChange={(value) =>
                   setFieldValue("endDate", dayjs(value).format("YYYY-MM-DDTHH:mm:ss"), true)
                 }
@@ -214,7 +215,7 @@ const CreateEvent = () => {
                 />
               </Button>
 
-              {imagePreview && allowedFileTypes.includes(imagePreview[0].type) && (
+              {imagePreview && allowedFileTypes.includes(imagePreview[0]?.type) && (
                 <div>
                   <div className="p-2 text-sm">Image Preview</div>
                   <div className="image-preview p-5 bg-[#F8F9FD] rounded-md">
@@ -262,19 +263,23 @@ const CreateEvent = () => {
 
               {/* create event btn */}
               <div className="pt-10 ">
-                <Button
-                  variant="contained"
-                  sx={{
-                    bgcolor: "#44924C",
-                    width: "14rem",
-                    color: "white",
-                    fontSize: "14px",
-                    borderRadius: "10px",
-                  }}
-                  type="submit"
-                >
-                  Create Challenge
-                </Button>
+                {isSubmitting ? (
+                  <CircularProgress sx={{ color: "#44924C" }} />
+                ) : (
+                  <Button
+                    variant="contained"
+                    sx={{
+                      bgcolor: "#44924C",
+                      width: "14rem",
+                      color: "white",
+                      fontSize: "14px",
+                      borderRadius: "10px",
+                    }}
+                    type="submit"
+                  >
+                    Create Challenge
+                  </Button>
+                )}
               </div>
             </Stack>
           </form>

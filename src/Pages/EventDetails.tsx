@@ -4,6 +4,9 @@ import { monthNames } from "../Constants/Constants";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import levelIcon from "../Assets/levelIcon.png";
 import { Button } from "@mui/material";
+import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 interface dateTimeInt {
   date: number;
@@ -12,19 +15,29 @@ interface dateTimeInt {
   time: string;
 }
 
-const event = {
-  name: "Data Science Bootcamp - Graded Datathon  ",
-  startDate: "2024-09-05T23:59:59",
-  endDate: "2024-09-10T23:59:59",
-  description: `Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-   Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-    when an unknown printer took a galley of type and scrambled it to make a type specimen book. `,
-  image:
-    "https://www.naukri.com/campus/career-guidance/wp-content/uploads/2023/11/what-is-data-science.jpg",
-  level: "easy",
-};
+interface eventDataInt {
+  id: string;
+  name: string;
+  startDate: string;
+  endDate: string;
+  description: string;
+  image: string;
+  level: string;
+}
 
 const EventDetails = () => {
+  const navigate = useNavigate();
+  const params = useParams();
+  const id: string | undefined = params.id;
+  const [event, setEvent] = useState<eventDataInt>({
+    id: "",
+    name: "",
+    startDate: "",
+    endDate: "",
+    description: "",
+    image: "",
+    level: "",
+  });
   const [eventStatus, setEventStatus] = useState<string | undefined>("");
   const [dateTime, setDateTime] = useState<dateTimeInt>({
     date: 1,
@@ -34,34 +47,61 @@ const EventDetails = () => {
   });
 
   useEffect(() => {
-    const startDate = event.startDate;
-    const endDate = event.endDate;
+    const fetchChallenge = () => {
+      try {
+        const localStorageData = JSON.parse(localStorage.getItem("challenges") as string);
+        let filterChallenge;
+        if (localStorageData && localStorageData.length > 0) {
+          filterChallenge = localStorageData.find((item: any) => item.id === id);
+          console.log(id);
+          console.log(localStorageData);
+          console.log(filterChallenge);
+          setEvent(filterChallenge);
+        } else {
+          setEvent({
+            id: "",
+            name: "",
+            startDate: "",
+            endDate: "",
+            description: "",
+            image: "",
+            level: "",
+          });
+        }
+        const startDate = filterChallenge.startDate;
+        const endDate = filterChallenge.endDate;
 
-    let status = getEventStatus(startDate, endDate);
+        let status = getEventStatus(startDate, endDate);
 
-    setEventStatus(status);
+        setEventStatus(status);
 
-    let dateToBeDisplay = "";
+        let dateToBeDisplay = "";
 
-    if (status === "Upcoming") {
-      dateToBeDisplay = startDate;
-    } else if (status === "Active") {
-      dateToBeDisplay = endDate;
-    } else if (status === "Past") {
-      dateToBeDisplay = endDate;
-    }
+        if (status === "Upcoming") {
+          dateToBeDisplay = startDate;
+        } else if (status === "Active") {
+          dateToBeDisplay = startDate;
+        } else if (status === "Past") {
+          dateToBeDisplay = endDate;
+        }
 
-    let newDate = new Date(dateToBeDisplay);
-    setDateTime({
-      date: newDate.getDate(),
-      month: monthNames[newDate.getMonth()],
-      year: newDate.getFullYear(),
-      time: newDate.toLocaleString("en-US", {
-        hour: "numeric",
-        minute: "numeric",
-        hour12: true,
-      }),
-    });
+        let newDate = new Date(dateToBeDisplay);
+        setDateTime({
+          date: newDate.getDate(),
+          month: monthNames[newDate.getMonth()],
+          year: newDate.getFullYear(),
+          time: newDate.toLocaleString("en-US", {
+            hour: "numeric",
+            minute: "numeric",
+            hour12: true,
+          }),
+        });
+      } catch (error) {
+        toast.error("Error fetching challenge details!");
+      }
+    };
+
+    fetchChallenge();
   }, []);
 
   const getFormattedDateTime = (eventStatus: string | undefined) => {
@@ -73,6 +113,27 @@ const EventDetails = () => {
       return `Started on ${formattedDateTime} (India Standard Time)`;
     } else if (eventStatus === "Past") {
       return `Ended on ${formattedDateTime} (India Standard Time)`;
+    }
+  };
+
+  const handleEditChallenge = () => {
+    navigate(`/editevent/${id}`);
+  };
+
+  const handleDeleteChallenge = (id: string | undefined) => {
+    try {
+      const localStorageData = JSON.parse(localStorage.getItem("challenges") as string);
+
+      if (localStorageData && localStorageData.length > 0) {
+        let newChallenges = localStorageData.filter((item: any) => item.id !== id);
+
+        console.log(newChallenges);
+        localStorage.setItem("challenges", JSON.stringify(newChallenges));
+        toast.success("Challenge deleted!");
+        navigate("/");
+      }
+    } catch (error) {
+      toast.error("Error deleting challenge");
     }
   };
 
@@ -116,6 +177,7 @@ const EventDetails = () => {
                     fontSize: "14px",
                     borderRadius: "10px",
                   }}
+                  onClick={handleEditChallenge}
                 >
                   Edit
                 </Button>
@@ -125,6 +187,7 @@ const EventDetails = () => {
                   variant="outlined"
                   color="error"
                   sx={{ fontSize: "14px", borderRadius: "10px" }}
+                  onClick={() => handleDeleteChallenge(id)}
                 >
                   Delete
                 </Button>

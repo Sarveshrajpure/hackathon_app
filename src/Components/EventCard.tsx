@@ -8,6 +8,7 @@ import { getEventStatus } from "../Utilities/getEventStaus";
 
 interface Props {
   eventData: {
+    id: string;
     name: string;
     startDate: string;
     endDate: string;
@@ -33,7 +34,7 @@ const EventCard: React.FC<Props> = ({ eventData }) => {
     year: 1970,
     time: "9:00 AM",
   });
-
+  console.log(eventStatus);
   useEffect(() => {
     const startDate = eventData.startDate;
     const endDate = eventData.endDate;
@@ -58,11 +59,11 @@ const EventCard: React.FC<Props> = ({ eventData }) => {
   }, [eventData.endDate, eventData.startDate]);
 
   const handleParicipateNowClick = () => {
-    navigate("/eventdetails", { state: { id: "123" } });
+    navigate(`/eventdetails/${eventData.id}`, { state: { id: "123" } });
   };
 
   return (
-    <div className="event-card-wrapper rounded-2xl bg-white w-[21rem] mb-10">
+    <div className="event-card-wrapper rounded-2xl bg-white w-[21rem] h-[30rem] mb-10">
       <div className="event-card-img-wrapper ">
         <img
           src={eventData.image}
@@ -86,7 +87,7 @@ const EventCard: React.FC<Props> = ({ eventData }) => {
             {eventStatus}
           </div>
         </div>
-        <div className="event-card-name text-center text-base font-semibold mb-5">
+        <div className="event-card-name text-center text-base font-semibold mb-5 h-[3rem]">
           {eventData.name}
         </div>
         <div className={`event-card-timer  ${eventStatus === "Past" ? "mb-9" : "mb-5"}`}>

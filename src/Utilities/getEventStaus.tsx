@@ -4,7 +4,7 @@ dayjs.extend(isBetween);
 
 export const getEventStatus = (startDate: string, endDate: string) => {
   let isBefore = dayjs().isBefore(dayjs(startDate));
-  let isBetweenStartAndEndDate = dayjs().isBetween(startDate, endDate, "day", "[]");
+  let isBetweenStartAndEndDate = dayjs().isBetween(startDate, endDate, null, "[]");
   let isAfter = dayjs().isAfter(dayjs(endDate));
 
   if (isBefore) {
@@ -12,6 +12,7 @@ export const getEventStatus = (startDate: string, endDate: string) => {
   } else if (isBetweenStartAndEndDate) {
     return "Active";
   } else if (isAfter) {
+    console.log("in asfter");
     return "Past";
   }
 };
