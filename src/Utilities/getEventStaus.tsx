@@ -1,4 +1,6 @@
 import dayjs from "dayjs";
+import isBetween from "dayjs/plugin/isBetween";
+dayjs.extend(isBetween);
 
 export const getEventStatus = (startDate: string, endDate: string) => {
   let isBefore = dayjs().isBefore(dayjs(startDate));

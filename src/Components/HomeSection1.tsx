@@ -1,8 +1,13 @@
 import React from "react";
 import rocketImg from "../Assets/rocket.svg";
 import { Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const HomeSection1 = () => {
+  const navigate = useNavigate();
+  const handleCreateChallengeClick = () => {
+    navigate("/createevent");
+  };
   return (
     <div className="bg-[#003145] h-[28.2rem] flex justify-around items-center px-20">
       <div className="create-challenge-text-wrapper ">
@@ -19,7 +24,11 @@ const HomeSection1 = () => {
           competitions.
         </div>
         <div className="create-challenge-btn pl-6 mt-5">
-          <Button variant="contained" sx={{ bgcolor: "white", color: "black", fontSize: "18px" }}>
+          <Button
+            variant="contained"
+            sx={{ bgcolor: "white", color: "black", fontSize: "18px" }}
+            onClick={handleCreateChallengeClick}
+          >
             Create Challenge
           </Button>
         </div>

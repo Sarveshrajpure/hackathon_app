@@ -21,8 +21,8 @@ const HomeSection2 = () => {
   return (
     <div className="bg-[#002A3B] h-48 px-52 flex items-center justify-between ">
       {statDisplay.map((item, index, array) => (
-        <>
-          <div className="stat-display-wrapper flex justify-between ">
+        <React.Fragment key={index}>
+          <div className="stat-display-wrapper flex justify-between">
             <div className="stat-display-icon ">
               <img src={item.icon} alt={item.description} />
             </div>
@@ -36,7 +36,7 @@ const HomeSection2 = () => {
           ) : (
             <div className="division p-[1px] bg-[#C4C4C4] h-10"></div>
           )}
-        </>
+        </React.Fragment>
       ))}
     </div>
   );

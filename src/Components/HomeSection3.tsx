@@ -47,10 +47,11 @@ const HomeSection3 = () => {
         Why Participate in <span className="text-[#44924C]">AI Challenges?</span>
       </div>
       <div className="challenges-of-ai-cards-wrapper mt-16 px-[8.5rem]  flex flex-wrap justify-between  ">
-        {advantagesOfAIChallengesData.map((item) => (
+        {advantagesOfAIChallengesData.map((item, index) => (
           <div
             className="challenges-of-ai-card bg-[#F8F9FD] flex items-center 
                           rounded-3xl px-6 py-10 mb-10 w-[34rem] h-[17rem]"
+            key={index}
           >
             <div>
               <div className="challenges-of-ai-card-icon mb-2">

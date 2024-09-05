@@ -138,8 +138,8 @@ const ExploreChallenges = () => {
         </div>
       </div>
       <div className="challenges-lists bg-[#003145] py-14 px-40 flex flex-wrap justify-between">
-        {events.map((item) => (
-          <EventCard eventData={item} />
+        {events.map((item, index) => (
+          <EventCard eventData={item} key={index} />
         ))}
       </div>
     </div>

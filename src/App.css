@@ -14,3 +14,12 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
+textarea {
+  border: 1px solid #b7b7b7;
+  border-radius: 5px;
+}
+
+textarea:focus {
+  outline: 1px solid #2196f3;
+  /* border: 1px solid #2196f3; */
+}

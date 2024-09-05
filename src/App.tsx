@@ -6,6 +6,7 @@ import Navbar from "./Components/Navbar";
 import { theme } from "./Utilities/theme";
 import { ThemeProvider } from "@mui/material/styles";
 import EventDetails from "./Pages/EventDetails";
+import CreateEvent from "./Pages/CreateEvent";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/eventdetails" element={<EventDetails />} />
+            <Route path="/createevent" element={<CreateEvent />} />
           </Routes>
         </HashRouter>
       </div>
