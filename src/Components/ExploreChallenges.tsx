@@ -41,16 +41,15 @@ const ExploreChallenges = () => {
     const fetchEvents = () => {
       try {
         const localStorageData = JSON.parse(localStorage.getItem("challenges") as string);
-
+        console.log(localStorageData);
         // Filters
-        let filteredData: events = [];
+        let filteredData: any = [];
         if (localStorageData && localStorageData.length > 0) {
           if (filterName.length > 0) {
             filterName.forEach((element) => {
               if (element === "All") {
                 setEvents(localStorageData);
               } else if (element === "Upcoming") {
-               
                 const filtredEvents = localStorageData.filter((item: any) => {
                   const startDate = new Date(item.startDate);
                   return startDate > currentDate;
@@ -59,7 +58,6 @@ const ExploreChallenges = () => {
                   filteredData.push(element);
                 });
               } else if (element === "Active") {
-                
                 const filtredEvents = localStorageData.filter((item: any) => {
                   const startDate = new Date(item.startDate);
                   const endDate = new Date(item.endDate);
@@ -96,6 +94,10 @@ const ExploreChallenges = () => {
                 });
               }
             });
+            // Remove duplicates based on a unique identifier (like id)
+            filteredData = Array.from(new Set(filteredData.map((event: any) => event.id))).map(
+              (id) => filteredData.find((event: any) => event.id === id)
+            );
 
             setEvents(filteredData);
           } else {
@@ -105,7 +107,6 @@ const ExploreChallenges = () => {
           setEvents([]);
         }
       } catch (error) {
-      
         toast.error("Error fetching challenges!");
       }
     };
@@ -113,7 +114,6 @@ const ExploreChallenges = () => {
     fetchEvents();
   }, [filterName]);
 
-  
   const handleFilterChange = (event: SelectChangeEvent<typeof filterName>) => {
     const {
       target: { value },

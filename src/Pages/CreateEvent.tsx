@@ -78,9 +78,7 @@ const CreateEvent = () => {
       toast.success("Challenge added!");
       setImagePreview(null);
       actions.resetForm();
-    } catch (error) {
-      
-    }
+    } catch (error) {}
   };
 
   const { values, handleChange, setFieldValue, isSubmitting, handleSubmit, errors } = useFormik({
@@ -89,7 +87,6 @@ const CreateEvent = () => {
     onSubmit,
   });
 
-  
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <div className="">
@@ -98,7 +95,7 @@ const CreateEvent = () => {
         </div>
         <div className="create-event-form px-16 pb-10">
           <form noValidate onSubmit={handleSubmit}>
-            <Stack spacing={2} width={400}>
+            <Stack spacing={2} width={500}>
               {/* Name filed */}
               <InputLabel
                 htmlFor="challenge name"
