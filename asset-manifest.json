@@ -1,20 +1,21 @@
 {
   "files": {
-    "main.css": "/Sarveshrajpure/hackathon_app/static/css/main.84ea693e.css",
-    "main.js": "/Sarveshrajpure/hackathon_app/static/js/main.f18fcbba.js",
-    "static/js/453.9ac338d0.chunk.js": "/Sarveshrajpure/hackathon_app/static/js/453.9ac338d0.chunk.js",
+    "main.css": "/Sarveshrajpure/hackathon_app/static/css/main.f533e2eb.css",
+    "main.js": "/Sarveshrajpure/hackathon_app/static/js/main.23c12b12.js",
+    "static/js/453.1c631386.chunk.js": "/Sarveshrajpure/hackathon_app/static/js/453.1c631386.chunk.js",
     "static/media/rocket.svg": "/Sarveshrajpure/hackathon_app/static/media/rocket.0f02ce0179c0c85cce33424f0a41407b.svg",
     "static/media/aiChallengeIcon.svg": "/Sarveshrajpure/hackathon_app/static/media/aiChallengeIcon.61657b14fc244009282f62fcd9ad7b42.svg",
     "static/media/dataScienceIcon.svg": "/Sarveshrajpure/hackathon_app/static/media/dataScienceIcon.c9d4654cbc2f6a861916c98150c3de03.svg",
+    "static/media/calenderIcon.svg": "/Sarveshrajpure/hackathon_app/static/media/calenderIcon.53f8534ab126acdb75073d62be643974.svg",
     "index.html": "/Sarveshrajpure/hackathon_app/index.html",
     "static/media/aiIcon.svg": "/Sarveshrajpure/hackathon_app/static/media/aiIcon.5689f05507f9881cd46df8fa85fb6661.svg",
     "static/media/proveYourSkillIcon.svg": "/Sarveshrajpure/hackathon_app/static/media/proveYourSkillIcon.85f4cfac6336f1d07eddab99d8df0b3a.svg",
-    "main.84ea693e.css.map": "/Sarveshrajpure/hackathon_app/static/css/main.84ea693e.css.map",
-    "main.f18fcbba.js.map": "/Sarveshrajpure/hackathon_app/static/js/main.f18fcbba.js.map",
-    "453.9ac338d0.chunk.js.map": "/Sarveshrajpure/hackathon_app/static/js/453.9ac338d0.chunk.js.map"
+    "main.f533e2eb.css.map": "/Sarveshrajpure/hackathon_app/static/css/main.f533e2eb.css.map",
+    "main.23c12b12.js.map": "/Sarveshrajpure/hackathon_app/static/js/main.23c12b12.js.map",
+    "453.1c631386.chunk.js.map": "/Sarveshrajpure/hackathon_app/static/js/453.1c631386.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.84ea693e.css",
-    "static/js/main.f18fcbba.js"
+    "static/css/main.f533e2eb.css",
+    "static/js/main.23c12b12.js"
   ]
 }
