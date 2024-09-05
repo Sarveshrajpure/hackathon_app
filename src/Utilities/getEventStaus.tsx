@@ -12,7 +12,7 @@ export const getEventStatus = (startDate: string, endDate: string) => {
   } else if (isBetweenStartAndEndDate) {
     return "Active";
   } else if (isAfter) {
-    console.log("in asfter");
+    
     return "Past";
   }
 };

@@ -53,9 +53,7 @@ const EventDetails = () => {
         let filterChallenge;
         if (localStorageData && localStorageData.length > 0) {
           filterChallenge = localStorageData.find((item: any) => item.id === id);
-          console.log(id);
-          console.log(localStorageData);
-          console.log(filterChallenge);
+          
           setEvent(filterChallenge);
         } else {
           setEvent({
@@ -127,7 +125,7 @@ const EventDetails = () => {
       if (localStorageData && localStorageData.length > 0) {
         let newChallenges = localStorageData.filter((item: any) => item.id !== id);
 
-        console.log(newChallenges);
+    
         localStorage.setItem("challenges", JSON.stringify(newChallenges));
         toast.success("Challenge deleted!");
         navigate("/");

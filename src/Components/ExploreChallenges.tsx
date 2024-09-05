@@ -50,7 +50,7 @@ const ExploreChallenges = () => {
               if (element === "All") {
                 setEvents(localStorageData);
               } else if (element === "Upcoming") {
-                console.log("In UPCOMING");
+               
                 const filtredEvents = localStorageData.filter((item: any) => {
                   const startDate = new Date(item.startDate);
                   return startDate > currentDate;
@@ -59,7 +59,7 @@ const ExploreChallenges = () => {
                   filteredData.push(element);
                 });
               } else if (element === "Active") {
-                console.log("In ACTIVE");
+                
                 const filtredEvents = localStorageData.filter((item: any) => {
                   const startDate = new Date(item.startDate);
                   const endDate = new Date(item.endDate);
@@ -105,7 +105,7 @@ const ExploreChallenges = () => {
           setEvents([]);
         }
       } catch (error) {
-        console.log(error);
+      
         toast.error("Error fetching challenges!");
       }
     };
@@ -113,8 +113,7 @@ const ExploreChallenges = () => {
     fetchEvents();
   }, [filterName]);
 
-  console.log("events", events);
-
+  
   const handleFilterChange = (event: SelectChangeEvent<typeof filterName>) => {
     const {
       target: { value },

@@ -79,7 +79,7 @@ const CreateEvent = () => {
       setImagePreview(null);
       actions.resetForm();
     } catch (error) {
-      console.log(error);
+      
     }
   };
 
@@ -89,8 +89,7 @@ const CreateEvent = () => {
     onSubmit,
   });
 
-  console.log(imagePreview);
-
+  
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <div className="">
@@ -218,7 +217,7 @@ const CreateEvent = () => {
               {imagePreview && allowedFileTypes.includes(imagePreview[0]?.type) && (
                 <div>
                   <div className="p-2 text-sm">Image Preview</div>
-                  <div className="image-preview p-5 bg-[#F8F9FD] rounded-md">
+                  <div className="image-preview px-6 py-4 w-max bg-[#F8F9FD] rounded-md">
                     <img
                       src={URL.createObjectURL(imagePreview[0])}
                       alt="ImagePreview"

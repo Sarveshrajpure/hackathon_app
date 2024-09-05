@@ -34,7 +34,6 @@ const EventCard: React.FC<Props> = ({ eventData }) => {
     year: 1970,
     time: "9:00 AM",
   });
-  console.log(eventStatus);
   useEffect(() => {
     const startDate = eventData.startDate;
     const endDate = eventData.endDate;
