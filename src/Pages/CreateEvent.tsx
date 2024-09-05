@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Stack,
   TextField,
@@ -17,6 +17,8 @@ import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { useFormik } from "formik";
 import dayjs from "dayjs";
 import { createEventsSchema } from "../Validations/CreateEventsValidations";
+import { allowedFileTypes } from "../Constants/Constants";
+import axios from "axios";
 
 interface imageFileInt {
   name: string;
@@ -27,7 +29,7 @@ interface formValuesInt {
   startDate: string;
   endDate: string;
   description: string;
-  image: Array<imageFileInt>;
+  image: FileList | null;
   level: string;
 }
 
@@ -36,24 +38,50 @@ const getCalendarIcon = () => {
 };
 
 const CreateEvent = () => {
-  const day = new Date();
-
-  const initialStartDate = dayjs(day).format("YYYY-MM-DDTHH:mm:ss");
-  let nextDay = new Date(day);
-  nextDay.setDate(day.getDate() + 1);
-  const initialEndDate = dayjs(day).add(1, "day").format("YYYY-MM-DDTHH:mm:ss");
+  const [imagePreview, setImagePreview] = useState<FileList | null>(null);
+  const today = new Date();
+  const initialStartDate = dayjs(today).format("YYYY-MM-DDTHH:mm:ss");
+  let nextDay = new Date(today);
+  nextDay.setDate(today.getDate() + 1);
+  const initialEndDate = dayjs(today).add(1, "day").format("YYYY-MM-DDTHH:mm:ss");
 
   const initialFormValues: formValuesInt = {
     name: "",
     startDate: initialStartDate,
     endDate: initialEndDate,
     description: "",
-    image: [{ name: "" }],
+    image: null,
     level: "",
   };
 
-  const onSubmit = (values: object, actions: any) => {
-    console.log(values);
+  const onSubmit = async (values: any, actions: any) => {
+    try {
+      const cloudinaryBaseUrl: string = process.env.REACT_APP_CLOUDINARY_BASE_URL as string;
+      const uploadPreset: string = process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET as string;
+      const cloudName: string = process.env.REACT_APP_CLOUDINARY_CLOUD_NAME as string;
+      const formData = new FormData();
+      formData.append("file", values.image[0]);
+      formData.append("upload_preset", uploadPreset);
+
+      let response = await axios.post(`${cloudinaryBaseUrl}${cloudName}/image/upload`, formData);
+
+      let newChallenges = [];
+      let existingChallenges = JSON.parse(localStorage.getItem("challenges") as string);
+
+      if (existingChallenges && existingChallenges.length > 0) {
+        newChallenges = existingChallenges;
+      }
+
+      let imageUrl = response.data.secure_url;
+
+      let dataToBeUploaded = values;
+      dataToBeUploaded.image = imageUrl;
+      newChallenges.push(dataToBeUploaded);
+
+      localStorage.setItem("challenges", JSON.stringify(newChallenges));
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const { values, handleChange, setFieldValue, handleSubmit, errors } = useFormik({
@@ -62,7 +90,7 @@ const CreateEvent = () => {
     onSubmit,
   });
 
-  console.log(values);
+  console.log(imagePreview);
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -178,12 +206,28 @@ const CreateEvent = () => {
                   type="file"
                   hidden
                   name="image"
-                  onChange={(event) => setFieldValue("image", event.target.files, true)}
+                  onChange={(event) => {
+                    setFieldValue("image", event.target.files, true);
+                    setImagePreview(event.target.files);
+                  }}
+                  accept="image/png, image/jpeg"
                 />
               </Button>
-              {errors.image ? <FormHelperText error>{errors.image.toString()}</FormHelperText> : ""}
 
-              <div className="text-sm">{values.image ? values.image[0]?.name : ""}</div>
+              {imagePreview && allowedFileTypes.includes(imagePreview[0].type) && (
+                <div>
+                  <div className="p-2 text-sm">Image Preview</div>
+                  <div className="image-preview p-5 bg-[#F8F9FD] rounded-md">
+                    <img
+                      src={URL.createObjectURL(imagePreview[0])}
+                      alt="ImagePreview"
+                      className="w-[15rem] rounded-md"
+                    />{" "}
+                  </div>
+                </div>
+              )}
+
+              {errors.image && <FormHelperText error>{errors.image.toString()}</FormHelperText>}
               {/* Level select */}
               <InputLabel
                 htmlFor="levelType"

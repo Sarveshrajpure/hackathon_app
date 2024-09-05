@@ -12,3 +12,5 @@ export const monthNames = [
   "Nov",
   "Dec",
 ];
+
+export const allowedFileTypes = ["image/jpeg", "image/png", "image/jpg"];
